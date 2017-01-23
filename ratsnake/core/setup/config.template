@@ -1,0 +1,7 @@
+{
+	"WEBSITE_NAME": "{{website_name}}",
+	"SQLALCHEMY_DATABASE_URI": "{{database_uri}}",
+	"THEME": "{{theme}}",
+	"ACTIVE_ADDONS": {{active_addons|safe}},
+	"SECRET_KEY": "{{secret_key}}"
+}

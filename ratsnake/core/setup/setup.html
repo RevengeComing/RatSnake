@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Installation Page For Ratsnake</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Ratsnake Installation Page</h1>
+            <p>This Page Consist of Basic Installation of Ratsnake, to Complete Installation Fill Asked Data and Submit.</p>
+        </div>
+        <form action="" method="POST" class="bs-example bs-example-form">
+
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                {% if messages %}
+                <ul style="color:red;">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Name Of The Website</span>
+                <input name="website_name" class="form-control" value="{{website_name}}">
+            </div>
+            <br>
+
+            <label for="basic-url">Secret Key is For Securing Your Data</label><br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Secret Key</span>
+                <input name="secret_key" class="form-control" value="{{secret_key}}">
+            </div>
+            <br>
+
+            <label for="basic-url">Supporting MySQL/Postgresql/Sqlite</label><br>
+            <label for="basic-url">Example : '{db_type:mysql/postgres}://{db_username}:{db_password}@{db_address}:{db_port}/{db_name}'</label>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Database URI</span>
+                <input name="database_uri" class="form-control" >                
+            </div>
+            <br>
+
+            {# <select name="" multiple>
+                {% for theme in themes %}
+                <option value="{{theme}}" {% if theme==current_theme %}selected=""{% endif %}>{{theme}}</option>
+                {% endfor %}
+                {# <option value="">asdasd</option>
+            </select><br> #}
+            <button class="btn btn-default" type="submit">Go!</button>
+        </form>
+
+    </div>
+</body>
+</html>
