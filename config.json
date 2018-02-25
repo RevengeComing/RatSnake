@@ -1,7 +1,4 @@
 {
-	"WEBSITE_NAME": "Ratsnake CMS",
-	"SQLALCHEMY_DATABASE_URI": "postgres://sepehr:123@localhost/ratsnake",
-	"THEME": "default",
-	"ACTIVE_ADDONS": [],
-	"SECRET_KEY": "Something Hard"
+	"SQLALCHEMY_DATABASE_URI": "",
+	"SECRET_KEY": ""
 }

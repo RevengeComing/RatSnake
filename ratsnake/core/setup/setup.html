@@ -30,10 +30,10 @@
             </div>
             <br>
 
-            <label for="basic-url">Secret Key is For Securing Your Data</label><br>
+            <label for="basic-url">Secret Key is For Securing Your Users Account</label><br>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Secret Key</span>
-                <input name="secret_key" class="form-control" value="{{secret_key}}">
+                <input name="secret_key" class="form-control" value="{% if secret_key %}{{secret_key}}{% else %}{{sample_secret_key}}{% endif %}">
             </div>
             <br>
 

@@ -1,5 +1,10 @@
 import os
 
+__all__ = [
+    'get_themes_list',
+    'is_theme',
+]
+
 def get_themes_list():
 	theme_list = []
 	for folder in os.walk('ratsnake/themes').next()[1]:

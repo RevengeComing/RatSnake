@@ -1,2 +1,1 @@
-
-template_tags_appliers = []
+from .theme import *

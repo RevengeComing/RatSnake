@@ -1,4 +1,4 @@
-from interface import menu_pages
+from .interface import menu_pages
 
 def get_admin_menu():
 	admin_menu = list()
@@ -12,6 +12,6 @@ def get_menu():
 def panel_tt_applier(app):
 	app.jinja_env.globals['get_menus'] = get_menus
 
-from ratsnake.core.interface import template_tags_appliers
+# from ratsnake.core import interface
 
-template_tags_appliers.append(panel_tt_applier)
+# interface.template_tags_appliers.append(panel_tt_applier)

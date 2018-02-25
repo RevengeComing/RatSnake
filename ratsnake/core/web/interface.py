@@ -30,3 +30,4 @@ def add_sub_menu(menu_title, sub_menu):
 def register_menu_pages():
     for menu_page in menu_pages:
         for key, value in menu_page['sub_menus']:
+            pass

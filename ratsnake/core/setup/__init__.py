@@ -1,6 +1,14 @@
+import json
+import os
+
 from flask import request, render_template_string, redirect, current_app, abort
-from ..interface.theme import get_themes_list
+
+from ...themes import get_current_theme, get_website_name, set_website_name
+from ..web.models import Option
+from ..web import database
 from ..interface.flash import flash_error
+
+from ratsnake.ext import db
 
 def setup(app):
 
@@ -29,18 +37,24 @@ def setup(app):
                                         active_addons="[]")
                 config_file.write(new_temp)
                 current_app.config['SQLALCHEMY_DATABASE_URI'] = request.form.get('database_uri')
-                current_app.config['WEBSITE_NAME'] = request.form.get('website_name')
                 current_app.config['SECRET_KEY'] = request.form.get('secret_key')
+                db.init_app(current_app)
+
+                database.create_all()
+                set_website_name(request.form.get('website_name'))
             return redirect('/')
-        import json
+
+        website_name = get_website_name() or "RatSnake"
+        # theme = get_current_theme()
+
         config = json.loads(open('config.json').read())
-        themes = get_themes_list()
+        sample_secret_key = os.urandom(24)
         return render_template_string(open('ratsnake/core/setup/setup.html', 'r').read(),
                                         database_uri=config['SQLALCHEMY_DATABASE_URI'],
-                                        website_name=config['WEBSITE_NAME'],
-                                        current_theme=config['THEME'],
+                                        website_name=website_name,
+                                        # current_theme=theme,
                                         secret_key=config['SECRET_KEY'],
-                                        themes=themes)
+                                        sample_secret_key=sample_secret_key)
 
 def validate_db_uri(user_input):
     res = user_input.split('://')
@@ -50,7 +64,7 @@ def validate_db_uri(user_input):
         return False
     db_name, res = res[1], res[0].split('@')
     db_auth, db_addr = res[0].split(':'), res[1].split(':')
-    print db_addr
+    print(db_addr)
     db_username, db_password = db_auth[0], db_auth[1]
     db_address = db_addr[0]
     if len(db_addr) > 1:

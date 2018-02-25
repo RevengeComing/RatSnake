@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login - RatSnake CMS</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	{# <link rel="icon" type="image/png" href=""/> #}
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='fonts/iconic/css/material-design-iconic-font.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='vendor/animate/animate.css')}}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='vendor/css-hamburgers/hamburgers.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='vendor/animsition/css/animsition.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='vendor/daterangepicker/daterangepicker.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('panel.static', filename='css/main.css')}}">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form method="POST" action="" class="login100-form validate-form">
+					{{form.csrf_token}}
+					<span class="login100-form-logo">
+						<i class="zmdi zmdi-landscape"></i>
+					</span>
+
+					<span class="login100-form-title p-b-34 p-t-27">
+						Ratsnake CMS
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						{{form.username(size=64, class="input100", placeholder="Username")}}
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+					{% if form.errors.username %}
+						asd
+					{% endif %}
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						{{form.password(size=64, class="input100", placeholder="Password")}}
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
+
+					<div class="contact100-form-checkbox">
+						{{form.remember_me(class="input-checkbox100", id="rmb-me")}}
+						<label class="label-checkbox100" for="rmb-me">
+							Remember me
+						</label>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<input type="submit" class="login100-form-btn" value="Login">
+					</div>
+
+{# 					<div class="text-center p-t-90">
+						<a class="txt1" href="#">
+							Forgot Password?
+						</a>
+					</div> #}
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+	
+<!--===============================================================================================-->
+	<script src="{{url_for('panel.static', filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('panel.static', filename='vendor/animsition/js/animsition.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('panel.static', filename='vendor/bootstrap/js/popper.js')}}"></script>
+	<script src="{{url_for('panel.static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('panel.static', filename='vendor/select2/select2.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('panel.static', filename='vendor/daterangepicker/moment.min.js')}}"></script>
+	<script src="{{url_for('panel.static', filename='vendor/daterangepicker/daterangepicker.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('panel.static', filename='vendor/countdowntime/countdowntime.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('panel.static', filename='js/main.js')}}"></script>
+
+</body>
+</html>
