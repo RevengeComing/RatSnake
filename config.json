@@ -1,4 +1,4 @@
 {
-	"SQLALCHEMY_DATABASE_URI": "",
-	"SECRET_KEY": ""
+	"SQLALCHEMY_DATABASE_URI": "postgres://ratsnake:123@localhost/ratsnake",
+	"SECRET_KEY": "0c3e5d1c3760ff76f2cfd279d6a9c782a1adfdd0cff340ef"
 }

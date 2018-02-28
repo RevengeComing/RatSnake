@@ -1,0 +1,19 @@
+{
+  "name": "ratsnake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RevengeComing/RatSnake.git"
+  },
+  "author": "Sepehr Hamzehlouy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RevengeComing/RatSnake/issues"
+  },
+  "homepage": "https://github.com/RevengeComing/RatSnake#readme"
+}

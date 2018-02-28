@@ -14,15 +14,11 @@
         </div>
         <form action="" method="POST" class="bs-example bs-example-form">
 
-            {% with messages = get_flashed_messages(category_filter=["error"]) %}
-                {% if messages %}
+            {% if message %}
                 <ul style="color:red;">
-                    {% for message in messages %}
                     <li>{{ message }}</li>
-                    {% endfor %}
                 </ul>
-                {% endif %}
-            {% endwith %}
+            {% endif %}
             
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Name Of The Website</span>
@@ -37,20 +33,43 @@
             </div>
             <br>
 
-            <label for="basic-url">Supporting MySQL/Postgresql/Sqlite</label><br>
-            <label for="basic-url">Example : '{db_type:mysql/postgres}://{db_username}:{db_password}@{db_address}:{db_port}/{db_name}'</label>
+            <label for="basic-url">Only Postgres is supported right now</label><br>
+
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Database URI</span>
-                <input name="database_uri" class="form-control" >                
+                <span class="input-group-addon" id="basic-addon1">Postgres host</span>
+                <input name="pg_host" class="form-control" value="localhost">                
             </div>
             <br>
 
-            {# <select name="" multiple>
-                {% for theme in themes %}
-                <option value="{{theme}}" {% if theme==current_theme %}selected=""{% endif %}>{{theme}}</option>
-                {% endfor %}
-                {# <option value="">asdasd</option>
-            </select><br> #}
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Postgres user</span>
+                <input name="pg_user" class="form-control" >                
+            </div>
+            <br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Postgres password</span>
+                <input name="pg_pass" class="form-control" >                
+            </div>
+            <br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Postgres database name</span>
+                <input name="db_name" class="form-control" >                
+            </div>
+            <br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">RatSnake username for admin</span>
+                <input name="admin_username" class="form-control" >                
+            </div>
+            <br>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">RatSnake admin password</span>
+                <input name="admin_password" class="form-control" >                
+            </div>
+            <br>
             <button class="btn btn-default" type="submit">Go!</button>
         </form>
 

@@ -1,11 +1,18 @@
 import sqlalchemy
 
+from flask import current_app
+
 from ratsnake.core.web.models import Option
 from ratsnake.ext import db
+
+def set_theme(theme_name):
+    current_app.template_folder = 'ratsnake/themes/%s/templates' % theme_name
+    current_app.static_folder = "ratsnake/themes/%s/statics" % theme_name
 
 def get_current_theme():
     try:
         theme = Option.query.filter_by(name='theme').first()
+        # print(theme.value)
         if not theme:
             theme = Option(name='theme', value='default')
             db.session.add(theme)
@@ -18,9 +25,11 @@ def set_current_theme(theme_name):
     theme = Option.query.filter_by(name="theme").first()
     if theme:
         theme.value = theme_name
+        
     else:
         theme = Option(name="theme", value=theme_name)
         db.session.add(theme)
+    set_theme(theme.value)
     db.session.commit()
 
 def get_website_name():
@@ -39,6 +48,6 @@ def set_website_name(name):
     if website_name:
         website_name.value = name
     else:
-        website_name = Option(name="theme", value=name)
+        website_name = Option(name="website_name", value=name)
         db.session.add(website_name)
     db.session.commit()

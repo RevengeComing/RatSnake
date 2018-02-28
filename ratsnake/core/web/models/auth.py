@@ -1,6 +1,10 @@
 import time
+import bcrypt
 
-from ratsnake.ext import db
+from flask import current_app
+from flask_login import UserMixin, AnonymousUserMixin
+
+from ratsnake.ext import db, login_manager
 
 # __all__ = ['User']
 
@@ -37,17 +41,42 @@ class GroupPermission(db.Model):
     permission_id = db.Column(db.Integer, db.ForeignKey('rs_permissions.id'))
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'rs_users'
     id = db.Column(db.Integer, primary_key=True, index=True)
 
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
-    username = db.Column(db.String(64))
+    username = db.Column(db.String(64), index=True, unique=True)
 
-    email = db.Column(db.String(128), index=True)
+    email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
 
     group_id = db.Column(db.Integer, db.ForeignKey('rs_groups.id'))
 
     is_admin = db.Column(db.Boolean, default=False)
+
+    @property
+    def password(self):
+        return self.password_hash
+
+    @password.setter
+    def password(self, _password):
+        self.password_hash = bcrypt.hashpw(_password.encode('utf8'),
+            bcrypt.gensalt()).decode()
+
+    def check_password(self, _password):
+        return bcrypt.checkpw(_password.encode('utf8'),
+            self.password.encode('utf8'))
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter_by(id=user_id).first()
+
+
+class AnonymousUser(AnonymousUserMixin):
+    def can(self):
+        return False
+
+login_manager.anonymous_user = AnonymousUser

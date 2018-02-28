@@ -21,7 +21,7 @@ class RatSnake(Flask):
 
 def create_app(app_name=DEFAULT_APP_NAME):
 
-    app = RatSnake(app_name, static_folder='media/statics', template_folder='media/templates')
+    app = RatSnake(app_name)
 
     configure_app(app)
     configure_extentions(app)
@@ -66,36 +66,12 @@ def configure_theme(app):
     with app.app_context():
         theme = get_current_theme()
         if theme:
-            app.template_folder = "ratsnake/themes/%s/templates" % theme.value
-            app.static_folder = "ratsnake/themes/%s/statics" % theme.value
+            app.template_folder = "themes/%s/templates" % theme.value
+            app.static_folder = "themes/%s/statics" % theme.value
 
 
 def configure_errorhandlers(app):
     pass
-    # @app.errorhandler(404)
-    # def page_not_found(error):
-    #     if request.is_xhr:
-    #         return jsonify(error=_('Sorry, page not found')), 404
-
-    #     return render_template("errors/404.html", error=error), 404
-
-    # @app.errorhandler(403)
-    # def forbidden(error):
-    #     if request.is_xhr:
-    #         return jsonify(error=_('Sorry, not allowed')), 403
-    #     return render_template("errors/403.html", error=error), 403
-
-    # @app.errorhandler(500)
-    # def server_error(error):
-    #     if request.is_xhr:
-    #         return jsonify(error=_('Sorry, an error has occurred')), 500
-    #     return render_template("errors/500.html", error=error), 500
-
-    # @app.errorhandler(401)
-    # def unauthorized(error):
-    #     if request.is_xhr:
-    #         return jsonify(error=_("Login required"))
-    #     return redirect(url_for("profile.login", next=request.path))
 
 def configure_template_tag(app):
     from ratsnake.core.interface import template_tags_appliers
