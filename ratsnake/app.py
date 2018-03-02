@@ -1,3 +1,7 @@
+"""
+Where a RatSnake app is created.
+"""
+
 import json
 
 import sqlalchemy
@@ -14,12 +18,30 @@ DEFAULT_APP_NAME = 'ratsnake'
 
 
 class RatSnake(Flask):
+    """
+    Costumized Flask class to use in RatSnake.
+    """
     def teardown_appcontext(self, f):
+        """
+        setupmethod has been removed to accept extension in
+        app context.
+        """
         self.teardown_appcontext_funcs.append(f)
         return f
 
 
 def create_app(app_name=DEFAULT_APP_NAME):
+    """
+    Main function to create RatSnake(Flask) app.
+
+    Parameters:
+    --------------
+    app_name: str
+        name of the flask app.
+
+    Returns:
+    app: Flask App Object
+    """
 
     app = RatSnake(app_name)
 
@@ -30,7 +52,17 @@ def create_app(app_name=DEFAULT_APP_NAME):
     # configure_template_tag(app)
     return app
 
-def configure_app(app):    
+def configure_app(app):
+    """
+    Configure app with config.json file which contains the SECRET_KEY and
+    SQLALCHEMY_DATABASE_URI.
+
+    Parameters:
+    app: Flask App Object
+
+    Returns:
+    app: Flask App Object    
+    """   
     config = json.loads(open('config.json', 'r').read())
     
     app.config['SQLALCHEMY_DATABASE_URI'] = config['SQLALCHEMY_DATABASE_URI']
@@ -41,6 +73,17 @@ def configure_app(app):
     setup.setup(app)
 
 def configure_addons(app):
+    """
+    This function adds flask blueprints to the app object.
+    first it adds panel and web blueprints then it adds blueprints under
+    addons folder
+
+    Parameters:
+    app: Flask App Object
+
+    Returns:
+    app: Flask App Object
+    """
     from ratsnake.core.web.views import web
     from ratsnake.core.panel.views import panel
     app.register_blueprint(panel)
@@ -63,6 +106,17 @@ def configure_addons(app):
         app.register_blueprint(addon.views.mod)
 
 def configure_theme(app):
+    """
+    This function adds flask blueprints to the app object.
+    first it adds panel and web blueprints then it adds blueprints under
+    addons folder
+
+    Parameters:
+    app: Flask App Object
+
+    Returns:
+    app: Flask App Object
+    """
     with app.app_context():
         theme = get_current_theme()
         if theme:
@@ -79,5 +133,14 @@ def configure_template_tag(app):
         template_tags_appliers(app)
 
 def configure_extentions(app):
+    """
+    This function adds RatSnake required extensions (flask-SQLAlchemy and flask-login).
+
+    Parameters:
+    app: Flask App Object
+
+    Returns:
+    app: Flask App Object
+    """
     db.init_app(app)
     login_manager.init_app(app)

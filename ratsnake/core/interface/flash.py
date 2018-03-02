@@ -1,20 +1,52 @@
+"""
+Flashing functionalities for RatSnake.
+"""
+
 from flask import flash
 
 __all__ = [
-	'flash_success',
-	'flash_info',
-	'flash_warning',
-	'flash_error'
+    'flash_success',
+    'flash_info',
+    'flash_warning',
+    'flash_error'
 ]
 
 def flash_success(message):
-	flash(message, 'success')
+    """
+    Flash a success message.
+
+    Parameters:
+    message: str
+        the message you want to flash. 
+    """
+    flash(message, 'success')
 
 def flash_info(message):
-	flash(message, 'info')
+    """
+    Flash a info message.
+
+    Parameters:
+    message: str
+        the message you want to flash. 
+    """
+    flash(message, 'info')
 
 def flash_warning(message):
-	flash(message, 'warning')
+    """
+    Flash a warning message.
+
+    Parameters:
+    message: str
+        the message you want to flash. 
+    """
+    flash(message, 'warning')
 
 def flash_error(message):
-	flash(message, 'error')
+    """
+    Flash a error message.
+
+    Parameters:
+    message: str
+        the message you want to flash. 
+    """
+    flash(message, 'error')
