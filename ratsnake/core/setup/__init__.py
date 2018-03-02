@@ -49,9 +49,10 @@ def setup(app):
                 current_app.config['SECRET_KEY'] = request.form.get('secret_key')
                 db.init_app(current_app)
                 config_file.write(new_temp)
-
+                
             database.create_all()
             set_website_name(request.form.get('website_name'))
+            get_current_theme()
 
             user = User(
                 username=admin_username, password=admin_password, is_admin=True
@@ -63,7 +64,6 @@ def setup(app):
 
         website_name = get_website_name() or "RatSnake"
         message = request.args.get('message')
-        # theme = get_current_theme()
 
         config = json.loads(open('config.json').read())
         sample_secret_key = os.urandom(24).hex()

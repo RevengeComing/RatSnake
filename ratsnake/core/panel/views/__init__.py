@@ -5,7 +5,7 @@ from flask_login import current_user
 panel = Blueprint(
 	'panel', 'panel',
     static_folder="ratsnake/core/panel/front/dist/static",
-    template_folder="ratsnake/core/panel/front/dist",
+    template_folder="ratsnake/core/panel/front",
     url_prefix='/rs-admin'
 )
 
@@ -19,4 +19,4 @@ def index():
 
 @panel.route('/dashboard/')
 def dashboard():
-	return render_template('dashboard.html')
+	return render_template('dist/dashboard.html')
