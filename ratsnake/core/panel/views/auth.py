@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for
 
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 
 from ratsnake import flash_error
 
@@ -8,6 +8,7 @@ from . import panel
 from ...web.models import *
 
 from ..forms import LoginForm
+
 
 @panel.route('/login/', methods=["GET", "POST"])
 def login():
@@ -24,6 +25,9 @@ def login():
         flash_error('Invalid username or password.')
     return render_template('login.html', form=form)
 
+
+@login_required
 @panel.route('/logout/')
 def logout():
-    pass
+    logout_user()
+    return redirect('/')

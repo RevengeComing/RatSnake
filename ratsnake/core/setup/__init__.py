@@ -57,6 +57,7 @@ def setup(app):
             user = User(
                 username=admin_username, password=admin_password, is_admin=True
             )
+            user.set_admin()
             db.session.add(user)
             db.session.commit()
 

@@ -55,6 +55,7 @@ class User(db.Model, UserMixin):
     group_id = db.Column(db.Integer, db.ForeignKey('rs_groups.id'))
 
     is_admin = db.Column(db.Boolean, default=False)
+    is_staff = db.Column(db.Boolean, default=False)
 
     @property
     def password(self):
@@ -68,6 +69,10 @@ class User(db.Model, UserMixin):
     def check_password(self, _password):
         return bcrypt.checkpw(_password.encode('utf8'),
             self.password.encode('utf8'))
+
+    def set_admin(self):
+        self.is_admin = True
+        self.is_staff = True
 
 
 @login_manager.user_loader
