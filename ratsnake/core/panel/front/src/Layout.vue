@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <rtl-layout></rtl-layout>    
   </div>
 </template>
 
 <script>
+import RTLLayout from './components/RTLLayout'
+
 export default {
-  name: 'App'
+  name: 'Layout',
+  components: {
+      'rtl-layout': RTLLayout
+  }
 }
 </script>
 
@@ -16,8 +20,8 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: right;
   color: #2c3e50;
-  margin-top: 60px;
+  height:100%;
 }
 </style>

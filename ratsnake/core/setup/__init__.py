@@ -1,6 +1,9 @@
 import json
 import os
 import psycopg2
+import random
+import string
+import inspect
 
 from flask import (request, render_template_string,
     redirect, current_app, abort, url_for)
@@ -11,6 +14,10 @@ from ..web import database
 from ..interface.flash import flash_error
 
 from ratsnake.ext import db
+
+
+SETUP_FOLDER_PATH = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+setup_template = open(os.path.join(SETUP_FOLDER_PATH, 'setup.html'), 'r').read().encode('utf8').decode('utf8')
 
 def setup(app):
 
@@ -54,12 +61,18 @@ def setup(app):
             set_website_name(request.form.get('website_name'))
             get_current_theme()
 
-            user = User(
-                username=admin_username, password=admin_password, is_admin=True
-            )
-            user.set_admin()
-            db.session.add(user)
+            user = User.query.filter_by(username=admin_username).first()
+            if not user:
+                user = User(
+                    username=admin_username, password=admin_password, is_admin=True
+                )
+                user.set_admin()
+                db.session.add(user)
+            else:
+                user.is_admin = True
+                user.password = admin_password
             db.session.commit()
+
 
             return redirect('/')
 
@@ -67,13 +80,14 @@ def setup(app):
         message = request.args.get('message')
 
         config = json.loads(open('config.json').read())
-        sample_secret_key = os.urandom(24).hex()
-        return render_template_string(open('ratsnake/core/setup/setup.html', 'r').read(),
-                                        database_uri=config['SQLALCHEMY_DATABASE_URI'],
-                                        website_name=website_name,
-                                        message=message,
-                                        secret_key=config['SECRET_KEY'],
-                                        sample_secret_key=sample_secret_key)
+        sample_secret_key = ''.join(random.choice(
+            string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(24))
+        return render_template_string(setup_template,
+                                    database_uri=config['SQLALCHEMY_DATABASE_URI'],
+                                    website_name=website_name,
+                                    message=message,
+                                    secret_key=config['SECRET_KEY'],
+                                    sample_secret_key=sample_secret_key)
 
 def check_connection(host, database, user,
                      password, database_type="postgres"):

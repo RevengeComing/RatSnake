@@ -144,3 +144,8 @@ def configure_extentions(app):
     """
     db.init_app(app)
     login_manager.init_app(app)
+
+# def setup_database(app):
+#     if app.config['SQLALCHEMY_DATABASE_URI']:
+#         from ratsnake.core.web.database import create_all
+#         create_all()

@@ -10,3 +10,6 @@ def create_all():
     create_table('rs_groups_permissions')
     create_table('rs_users')
     create_table('rs_options')
+
+def create_permissions():
+    raise NotImplemented()

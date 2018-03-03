@@ -12,9 +12,9 @@ panel = Blueprint(
 )
 
 from . import auth
+from . import api
 
 
-@staff_required
 @panel.route('/')
 def index():
 	if current_user.is_authenticated:

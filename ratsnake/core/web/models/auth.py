@@ -29,9 +29,22 @@ class Group(db.Model):
 
     permissions = db.relationship('Permission', secondary='rs_groups_permissions')
 
+    class Meta:
+        permissions = (
+            ('can_get_groups', 'Can get groups'),
+            ('can_add_groups', 'Can add groups'),
+            ('can_edit_groups', 'Can edit groups'),
+            ('can_delete_groups', 'Can delete groups'),
+        )
+
     def add_permission(self, permission):
         perm = Permission.query.filter_by(code_name=permission).first()
         self.permissions.append(perm)
+
+    def can(self, permission):
+        if permission in [perm.code_name for perm in permissions]:
+            return True
+        return False
 
 
 class GroupPermission(db.Model):
@@ -57,6 +70,16 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, default=False)
     is_staff = db.Column(db.Boolean, default=False)
 
+    group = db.relationship(Group)
+
+    class Meta:
+        permissions = (
+            ('can_get_users', 'Can get users'),
+            ('can_add_users', 'Can add users'),
+            ('can_edit_users', 'Can edit users'),
+            ('can_delete_users', 'Can delete users'),
+        )
+
     @property
     def password(self):
         return self.password_hash
@@ -74,10 +97,17 @@ class User(db.Model, UserMixin):
         self.is_admin = True
         self.is_staff = True
 
+    def can(self, permission):
+        if self.is_admin:
+            return True
+        return self.group.can(permission)
+
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.filter_by(id=user_id).first()
+    if current_app.config['SQLALCHEMY_DATABASE_URI']:
+        return User.query.filter_by(id=user_id).first()
+    return None
 
 
 class AnonymousUser(AnonymousUserMixin):

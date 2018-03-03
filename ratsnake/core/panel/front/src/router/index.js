@@ -10,6 +10,16 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
-    }
+    } //,
+    // {
+    //   path: '/users/',
+    //   name: 'HelloWorld',
+    //   component: HelloWorld
+    // },
+    // {
+    //   path: '/posts/',
+    //   name: 'HelloWorld',
+    //   component: HelloWorld
+    // }
   ]
 })

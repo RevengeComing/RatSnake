@@ -2,6 +2,7 @@ import os
 import inspect
 import json
 
+from ratsnake import flash_warning
 from ratsnake.core.web.models import Option
 
 addones_dir_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -14,7 +15,7 @@ def add_addone(addone):
     active_addones = get_active_addones()
     if addone in active_addones:
         # TODO: Convert to flash message
-        print('addone is already activated')
+        flash_warning('addone is already activated')
         return
 
     # TODO: call database upgrade
