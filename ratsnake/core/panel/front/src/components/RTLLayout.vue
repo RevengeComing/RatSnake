@@ -1,25 +1,10 @@
 <template>
 	<div class="rtl_layout">
-		<div class="ui top attached menu">
-			<div class="ui dropdown icon item">
-				test
-			</div>
-		</div>
+		<navbar :userinfo="userinfo"></navbar>
 		<div class="pushable">
-		  <div class="ui sidebar vertical menu right  visible">
-		    <a class="item">
-		      1
-		    </a>
-		    <a class="item">
-		      2
-		    </a>
-		    <a class="item">
-		      3
-		    </a>
-		  </div>
-
+			<sidebar></sidebar>
 		  <div class="pusher">
-		  	<div class="ui container">
+		  	<div dir="rtl" class="ui container p-container">
 			  	<router-view/>
 		  	</div>
 		  </div>
@@ -28,17 +13,18 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
+import Navbar from './Navbar'
+import Sidebar from './Sidebar'
 
 export default {
-  name: 'RTLLayout',
-  async created() {
-    try {
-      const response = await axios.get(`http://localhost:5000/rs-admin/api/sidebar-links/`)
-      this.posts = response.data
-    } catch (e) {
-      this.errors.push(e)
-    }
+  name: 'RTLLayout',  
+  components: {
+      'sidebar': Sidebar,
+      'navbar': Navbar
+  },
+  props: {
+  	userinfo: Object
   }
 }
 </script>
@@ -55,5 +41,8 @@ export default {
 }
 .rtl_layout {
 	height:100%;
+}
+.p-container {
+	padding-top:20px;
 }
 </style>

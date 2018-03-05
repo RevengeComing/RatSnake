@@ -1,12 +1,13 @@
+import json
 import time
 import bcrypt
 
-from flask import current_app
-from flask_login import UserMixin, AnonymousUserMixin
+from flask import current_app, jsonify
+from flask_login import UserMixin, AnonymousUserMixin, current_user
 
 from ratsnake.ext import db, login_manager
 
-# __all__ = ['User']
+__all__ = ['User', 'Permission', 'Group']
 
 def create_groups():
     Permission.create_basic_permissions()
@@ -70,6 +71,9 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, default=False)
     is_staff = db.Column(db.Boolean, default=False)
 
+    confirmed = db.Column(db.Boolean, default=False)
+    deleted = db.Column(db.Boolean, default=False)
+
     group = db.relationship(Group)
 
     class Meta:
@@ -102,6 +106,21 @@ class User(db.Model, UserMixin):
             return True
         return self.group.can(permission)
 
+    def jsonify(self, serialize=True):
+        obj = {
+            'id':self.id, 'first_name':self.first_name, 'last_name':self.last_name,
+            'username':self.username, 'email':self.email,
+            'is_admin':self.is_admin, 'is_staff':self.is_staff, 'type':'registered'
+        }
+        if self.group:
+            obj['group'] = self.group.name
+        if serialize:
+            return jsonify(obj)
+        return obj
+
+    def __repr__(self):
+        return "<User username='%s' id=%d>" % (self.username, self.id)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -111,7 +130,13 @@ def load_user(user_id):
 
 
 class AnonymousUser(AnonymousUserMixin):
-    def can(self):
+    def can(self, permission):
+        if current_app.debug:
+            return True
         return False
+
+    def jsonify(self):
+        return jsonify({'type':'anonymous'})
+
 
 login_manager.anonymous_user = AnonymousUser

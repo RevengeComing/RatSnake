@@ -27,7 +27,7 @@ class SidebarLinks(object):
         return getattr(self.instance, name)
 
     def add_link(self, view_handler, title, parent):
-        link = {'handler': view_handler, 'childs':OrderedDict()}
+        link = {'handler': view_handler.sidebar_endpoint, 'childs':OrderedDict()}
         if parent:
             SidebarLinks.instance.links[parent]['childs'][title] = link
         else:

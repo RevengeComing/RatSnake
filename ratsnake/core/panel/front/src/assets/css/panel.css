@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'B Yekan';
+  src: url('http://localhost:5000/rs-admin/static/fonts/Yekan.ttf') format('truetype');
+}
+h1, h2, h3, h4, h5, body, * {
+  font-family: "B Yekan"
+}
+.ui.table {
+	text-align: right;
+}

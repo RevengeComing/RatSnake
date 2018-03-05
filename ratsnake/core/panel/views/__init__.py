@@ -1,6 +1,6 @@
 from ratsnake import staff_required, admin_required
 
-from flask import Blueprint, redirect, url_for, render_template
+from flask import Blueprint, redirect, url_for, render_template, current_app
 
 from flask_login import current_user
 
@@ -14,6 +14,12 @@ panel = Blueprint(
 from . import auth
 from . import api
 
+@panel.after_request
+def add_cors(resp):
+    if current_app.debug:
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
+    return resp
 
 @panel.route('/')
 def index():
